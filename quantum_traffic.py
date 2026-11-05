@@ -363,7 +363,34 @@ def main() -> None:
         f"{sim['avg_ped_wait_s']:.1f} s per pedestrian; "
         f"still waiting at 100 s: {sim['cars_left']:.0f} cars, {sim['peds_left']:.0f} pedestrians"
     )
+    print_half_and_half(args.priority, traffic, result)
+
+
+def print_half_and_half(priority: str, traffic: Traffic, result: dict | None = None) -> None:
+    """Baseline: N/S green for the first 50 s, then E/W green for the last 50 s."""
+    bits = "0" * (N_SLOTS // 2) + "1" * (N_SLOTS // 2)
+    sim = simulate(bits, traffic)
+    w = int(priority, 2) / 15
+    x = np.array([[int(c) for c in bits]])
+    h_car, J_car = car_hamiltonian(traffic)
+    h_ped, J_ped = ped_hamiltonian(traffic)
+    energy = float(((1 - w) * energies(h_car, J_car, x) + w * energies(h_ped, J_ped, x))[0])
+
+    print(f"\nHalf-and-half baseline ({bits}): 0-50 s N/S green, 50-100 s E/W green")
+    print(
+        f"Simulation: average wait {sim['avg_car_wait_s']:.1f} s per car, "
+        f"{sim['avg_ped_wait_s']:.1f} s per pedestrian; "
+        f"still waiting at 100 s: {sim['cars_left']:.0f} cars, {sim['peds_left']:.0f} pedestrians"
+    )
+    if result is not None:
+        q = result["simulation"]
+        print(
+            f"Quantum vs baseline: car wait {q['avg_car_wait_s']:.1f} s vs {sim['avg_car_wait_s']:.1f} s, "
+            f"pedestrian wait {q['avg_ped_wait_s']:.1f} s vs {sim['avg_ped_wait_s']:.1f} s, "
+            f"energy {result['energy']:.3f} vs {energy:.3f} (lower = happier)"
+        )
 
 
 if __name__ == "__main__":
     main()
+
