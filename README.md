@@ -2,12 +2,6 @@
 
 A hybrid quantum/classical approach to optimizing traffic at urban intersections, built for the Qiskit Fall Fest hackathon.
 
-## Team
-
-- Jonah
-- Ihan
-- Yoav
-
 ## The Problem
 
 Urban intersections have become a place of frustration, mismanagement, and delay in the daily lives of millions of people. Our aim is to optimize the contentment of everyone involved, namely **cars and pedestrians**, rather than favoring one group at the other's expense.
@@ -15,9 +9,11 @@ Urban intersections have become a place of frustration, mismanagement, and delay
 ## Our Thought Process
 
 ![Our thought process](docs/Screenshot.png)
+1. **Inputs.** User input of how much to prioritize cars vs pedestrians. Calculated values representing car and pedestrian happiness.
+2. **Hamiltonian.** Optimizes the system according to the priorization input.
+3. **Output.** A 16 q-bit sequence representing 10-second intervals of N/W light being green or the E/W light being green.
 
-<!-- TODO: add a short written explanation of the screenshot / brainstorm -->
-
+### What the algorithm actually does
 1. **Model the intersection.** Describe cars and pedestrians as competing demands on a shared intersection.
 2. **Encode the problem for Qiskit.** Translate the optimization into a form a quantum circuit can work on (e.g. a cost function / Hamiltonian over signal states).
 3. **Solve with a hybrid loop.** The quantum circuit is run with Qiskit, and classical code handles setup, scoring, and interpreting the results.
