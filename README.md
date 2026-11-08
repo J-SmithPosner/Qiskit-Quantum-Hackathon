@@ -11,14 +11,13 @@ Urban intersections have become a place of frustration, mismanagement, and delay
 1. **Inputs.** User input of how much to prioritize cars vs pedestrians. Calculated values representing car and pedestrian happiness.
 2. **Hamiltonian.** Optimizes the system according to the priorization input.
 3. **Output.** A 16 q-bit sequence representing 10-second intervals of N/W light being green or the E/W light being green.
-![Our thought process](docs/Brainstorm.png)
+![Our thought process](docs/Workflow.png)
 
 ### What the Algorithm Actually Does
 1. **Model the intersection.** Describe cars and pedestrians as competing demands on a shared intersection.
 2. **Encode the problem for Qiskit.** Translate the optimization into a form a quantum circuit can work on (e.g. a cost function / Hamiltonian over signal states).
 3. **Solve with a hybrid loop.** The quantum circuit is run with Qiskit, and classical code handles setup, scoring, and interpreting the results.
 4. **Evaluate.** Compare outcomes for cars and pedestrians to check that both groups benefit.
-![What the Algorithm Actually Does](docs/Workflow.png)
 
 ## Why Quantum?
 
